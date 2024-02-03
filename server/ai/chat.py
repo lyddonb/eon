@@ -1,7 +1,7 @@
 from langchain import hub
 from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 
 # Taken from: https://python.langchain.com/docs/modules/agents/how_to/streaming
 # Add the AgentAction/observation/AgentFinish stuff later
