@@ -1,7 +1,7 @@
 import random
 
 from langchain import PromptTemplate
-from langchain_community.llms import OpenAI
+from langchain_openai import OpenAI
 from server.ai.qa_reasoner.output_parsers import get_create_persona_output_parser
 from server.ai.qa_reasoner.output_parsers import get_personas_output_parser
 
@@ -193,17 +193,16 @@ def get_selected_personas(question: str):
         llm_personas['persona3']
     ]
 
-    print("OUT", out)
-
     for persona in out:
         if persona not in personas_definitions:
             persona_definition = create_persona_via_llm(persona, question)
             personas_definitions[persona] = persona_definition["description"]
 
     # Creating a new dictionary combining personas with their definitions
-    combined_dict = {
-        persona_title: personas_definitions[persona_title] for persona_title in out
-    }
+    return [
+        { "title": persona_title, "description": personas_definitions[persona_title] } for persona_title in out
+    ]
 
+def personas_to_string(personas):
     # Convert combined_dict to a string to feed into subsequent LLM calls
-    return '\n\n'.join([f'{key}: {value}' for key, value in combined_dict.items()])
+    return '\n\n'.join([f'{persona["title"]}: {persona["description"]}' for persona in personas])
