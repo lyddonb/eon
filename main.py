@@ -16,5 +16,4 @@ app.register_blueprint(converse, url_prefix='/api/converse')
 app.register_blueprint(personas, url_prefix='/api/personas')
 
 if __name__ == '__main__':
-    # app.run(port=9999, debug=True)
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 9999)))
